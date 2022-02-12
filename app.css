@@ -1,0 +1,35 @@
+
+#board {
+    position: relative;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    
+    justify-content: center;
+    background-color: whitesmoke;
+    width: 500px;
+    height: 500px;
+
+    display: grid;
+    grid-gap: 2px;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+div > div {
+    padding: 20px;
+    background-color: grey;
+    text-align: center;
+    font-size: xxx-large;
+    line-height: 120px;
+}
+
+#welcome  {
+    text-align: center;
+}
+
+#getInfo {
+    display: flex;
+    justify-content: center;
+}
