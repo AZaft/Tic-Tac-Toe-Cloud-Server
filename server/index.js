@@ -1,19 +1,70 @@
+const MongoClient = require('mongodb').MongoClient;
+const url = 'mongodb://127.0.0.1:27017';
+
 const express = require('express');
 const app = express();
 
 app.use( express.json());
 app.use(express.urlencoded());
-app.use(express.static('/var/www/loner.cse356.compas.cs.stonybrook.edu/'));
-app.set('view engine', 'pug');
 
 const PORT = 3000;
 
-
-app.post('/ttt/', (req, res) => {
-    console.log(req.body.name);
-    const date = new Date();
-    res.render('index', { message: "Hello " + req.body.name + ", " + date});
+//database connection
+let db;
+MongoClient.connect(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}, (err, client) => {
+    if (err) {
+        return console.log(err);
+    }
+    db = client.db('TicTacToe');
+    console.log(`MongoDB Connected: ${url}`);
 });
+
+
+app.post('/adduser', (req, res) => {
+    const users = db.collection('users');
+
+    users.insertOne(req.body)
+    .then(result => {
+        console.log(result);
+    })
+    .catch(err => {
+        res.status(404).send({
+            "status": "ERROR"
+        })
+        console.log(err);
+    });
+
+    res.status(200).send({
+        "status": "OK"
+    })
+});
+
+app.post('/login', (req, res) => {
+    const users = db.collection('users');
+
+    users.findOne({username: req.body.username})
+    .then(result => {
+        if(result == null){
+            res.status(404).send({
+                "status": "ERROR"
+            })
+        }
+        console.log(result);
+    })
+    .catch(err => {
+        res.status(404).send({
+            "status": "ERROR"
+        })
+        console.log(err);
+    });
+
+});
+
+
+
 
 app.post('/ttt/play', (req, res) => {
     const{grid} = req.body;

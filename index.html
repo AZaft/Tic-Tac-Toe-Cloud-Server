@@ -1,21 +1,31 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>CSE356 - Warm Up 1</title>
+        <title>CSE356 - Warm Up 2</title>
         <meta name="id" content="61f9f92e73ba724f297db7d0"> </meta>
         <link rel="stylesheet" href="app.css">
     </head>
     <body>
+
         
-        <form action="/ttt/" method="POST">
-            <label for="fname">Please enter your name:</label>
-            <input type="text" id="name" name="name">
-            <input type="submit" value="Submit">
+        <div id="signup">
+            <label> Username</label>
+            <input id="username"> 
+            <label> Password</label>
+            <input id="password"> 
+            <label> Email</label>
+            <input id="email"> 
+            <input onclick="handleSignup()" style="margin-top: 5px;" type="submit" value="Sign Up">
         </div>
 
-        <h2 id="welcome">
-           
-        </h2>
+        <div id="login">
+            <label> Username</label> 
+            <input id="username2">
+            <label> Password</label>
+            <input id="password2"> 
+            <input onclick="handleLogin()" style="margin-top: 5px;" type="submit" value="Login">
+        </div>
+
         <div id="board">
             <div id="cell0" onclick="handleClick(event)"></div>
             <div id="cell1" onclick="handleClick(event)"></div>
