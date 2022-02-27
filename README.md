@@ -1,2 +1,2 @@
 # CSE356 Tic-Tac-Toe Cloud Server
-Programming assignment for a REST-based Tic-Tac-Toe service on a cloud instance.
+Programming assignment for a REST-based Tic-Tac-Toe service on a cloud instance with backend for user registration, session data, and storing played games. Used Nginx, Express, and mongodb.

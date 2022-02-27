@@ -1,47 +1,29 @@
 let player = "O";
-let grid = ["", "", "", "", "", "", "", "", ""];
+let grid = [" ", " ", " ", " ", " ", " ", " ", " ", " "];
 
 
 function handleClick(event){
     let index = event.target.id.substring(4);
     
-    if(event.target.innerHTML === ""){
-        if(player === "O"){
-            event.target.innerHTML = player;
-            grid[index] = player;
-            player = "X"
-            
-        } else {
-            event.target.innerHTML = player;
-            grid[index] = player;
-            player = "O"
-        }
-
-        //bot play
-        for(let i = 0; i < grid.length;i++){
-            if(grid[i] === ""){
-                if(player === "O"){
-                    document.getElementById("cell" + i).innerHTML = player;
-                    grid[i] = player;
-                    player = "X";
-                } else {
-                    document.getElementById("cell" + i).innerHTML = player;
-                    grid[i] = player;
-                    player = "O";
-                }
-                break;
-            } 
-        }
-
+    if(event.target.innerHTML === "" || event.target.innerHTML === " "){
         var sendGrid = new XMLHttpRequest();
         sendGrid.open("POST", "/ttt/play", true);
         sendGrid.setRequestHeader('Content-Type', 'application/json');
         sendGrid.onload = function(){
             console.log("Play res: " + this.responseText);
+            let newGrid = JSON.parse(this.responseText).grid;
+            drawGrid(newGrid);
+            grid = newGrid;
         };
         sendGrid.send(JSON.stringify({
-            "grid": grid
+            "move": index
         }));
+    }
+}
+
+function drawGrid(grid){
+    for(let i = 0; i < 9;i++){
+        document.getElementById("cell" + i).innerHTML = grid[i];
     }
 }
 
@@ -62,7 +44,8 @@ function handleSignup(){
     sendUser.send(JSON.stringify({
         "username": username,
         "password": password,
-        "email": email
+        "email": email,
+        "disabled": true
     }));
 }
 
@@ -78,6 +61,7 @@ function handleLogin(){
     sendUser.onload = function(){
         console.log("Signin res: " + this.responseText);
     };
+
     sendUser.send(JSON.stringify({
         "username": username,
         "password": password
